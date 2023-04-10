@@ -5,7 +5,7 @@ setup(
     version="0.1.0",
     packages=find_packages(),
     description='This program sorting thrash folder',
-    url='https://github.com/Wargoth-ks/Python_data/clean_folder',
+    url='https://github.com/Wargoth-ks/Python_data/tree/main/clean_folder',
     author='Wargoth_ks',
     author_email='warheart1986@gmail.com',
     license='MIT',
