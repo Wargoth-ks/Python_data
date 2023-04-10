@@ -141,8 +141,7 @@ def main():
             print(f"Documents: {DOCS}")
             print(f"Archives: {ARCHS}")
             print(f"Unknowns: {UNKNS}")
-            print(
-                "\nThis program has completed all necessary operations and terminated successfully.\n")
+            print("\nThis program has completed all necessary operations and terminated successfully.\n")
 
     except Exception as e:
         print(e)
