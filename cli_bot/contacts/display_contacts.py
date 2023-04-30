@@ -1,3 +1,5 @@
+from termcolor import colored
+
 # This function forming table of contacts and phone numbers
 
 def display_contacts(contacts):
@@ -19,4 +21,4 @@ def display_contacts(contacts):
     # Generating the table footer
     table += f'+{"-" * (max_name_len + 2)}+{"-" * (max_phone_len + 2)}+'
 
-    return table
+    return colored(table, "cyan")

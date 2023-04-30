@@ -1,3 +1,7 @@
+# This function show help in table
+
+from termcolor import colored
+
 def display_help():
 
     cmd_help = {
@@ -28,5 +32,6 @@ def display_help():
 
     # Generating the table footer
     table += f'+{"-" * (max_name_len + 2)}+{"-" * (max_phone_len + 2)}+'
-    return table
+    return colored(table, "magenta")
 
+print()

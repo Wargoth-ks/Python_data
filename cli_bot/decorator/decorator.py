@@ -1,19 +1,20 @@
-
+from termcolor import colored
 # Decorator
 
 def input_error(func):
     def inner(*args, **kwargs):
         try:
-            result = func(*args, **kwargs)
-            return result
+            return func(*args, **kwargs)
         except KeyError as key:
-            return f"Key Error: {key}"
+            return ("Key Error: " + colored(f"<< {key} >>", "red"))
         except ValueError as val:
-            return f'Value Error: {val}'
+            return ("Value Error: " + colored(f"<< {val} >>", "red"))
         except IndexError as ind:
-            return f'Index Error: {ind}'
-        except TypeError:
-            return f"Command not found. Please, try again!"
+            return ("Index Error: " + colored(f"<< {ind} >>", "red"))
+        except TypeError as type:
+            return ("Type Error: " + colored(f"<< {type} >>", "red"))
         except Exception as e:
-            return f"Error: {e}"
+            return ("Exception Error: " + colored(f"<< {e} >>", "red"))
     return inner
+
+

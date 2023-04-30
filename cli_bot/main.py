@@ -1,24 +1,15 @@
+from termcolor import colored
 from greet.greet import greet
-from contacts.save_contacts import contacts
+
 from commands_handler.commands import hello, helper, add_contact, del_contact, error_func
 from commands_handler.commands import change_phone, show_all, show_phone, good_bye
 
-
-# Main function
-
-greet()
-
-print("\nTo get help on the commands, please type \"help\"")
-
-
-def main():
-
-    dict_cmd = {
+dict_cmd = {
         "hello": hello,
         "help": helper,
-        "add ": add_contact,
-        "del ": del_contact,
-        "change ": change_phone,
+        "add": add_contact,
+        "del": del_contact,
+        "change": change_phone,
         "phone": show_phone,
         "show all": show_all,
         "good bye": good_bye,
@@ -27,20 +18,35 @@ def main():
         ".": good_bye
     }
 
-    simple_cmds = ["hello", "help", "good bye", "close", "exit", "."]
+def parse_func(user_input):
+    command, *args = user_input.split()
+    command = command.lstrip()
 
+    try:
+        handler = dict_cmd[command.lower()]
+    except KeyError:
+        if args:
+            command = command + ' ' + args[0]
+            args = args[1:]
+        handler = dict_cmd.get(command.lower(), error_func)
+
+    return handler, args
+
+# Main function
+
+def main():
     while True:
-        command = input("\nEnter command: ").lower().strip()
-        for cmd, func in dict_cmd.items():
-            if command.startswith(cmd.strip()):
-                if cmd.rstrip() in simple_cmds and len(command) == len(cmd.strip()):
-                    func()
-                else:
-                    print(func(command, contacts))
-                break
+        user_input = input(colored("\nEnter command: ", "green"))
+        if not user_input:
+            handler, *args = error_func, "No command entered"
         else:
-            print(error_func())
-
+            print(colored("You entered: ", "yellow"), colored(f"{user_input}", "white"))
+            handler, *args = parse_func(user_input)
+        result = handler(*args)
+        if result:
+            print(handler(*args))
 
 if __name__ == "__main__":
+    greet()
     main()
+
