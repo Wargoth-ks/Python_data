@@ -5,18 +5,21 @@ from commands_handler.commands import hello, helper, add_contact, del_contact, e
 from commands_handler.commands import change_phone, show_all, show_phone, good_bye
 
 dict_cmd = {
-        "hello": hello,
-        "help": helper,
-        "add": add_contact,
-        "del": del_contact,
-        "change": change_phone,
-        "phone": show_phone,
-        "show all": show_all,
-        "good bye": good_bye,
-        "close": good_bye,
-        "exit": good_bye,
-        ".": good_bye
-    }
+    "hello": hello,
+    "help": helper,
+    "add": add_contact,
+    "del": del_contact,
+    "change": change_phone,
+    "phone": show_phone,
+    "show all": show_all,
+    "good bye": good_bye,
+    "close": good_bye,
+    "exit": good_bye,
+    ".": good_bye
+}
+
+simple_cmds = ["show all", "good bye", "close", "exit", ".", "help", "hello"]
+
 
 def parse_func(user_input):
     command, *args = user_input.split()
@@ -32,21 +35,31 @@ def parse_func(user_input):
 
     return handler, args
 
-# Main function
 
 def main():
     while True:
         user_input = input(colored("\nEnter command: ", "green"))
         if not user_input:
-            handler, *args = error_func, "No command entered"
+            print(error_func())
+        elif user_input in simple_cmds:
+            func = dict_cmd.get(user_input)
+            print(func())
         else:
-            print(colored("You entered: ", "yellow"), colored(f"{user_input}", "white"))
             handler, *args = parse_func(user_input)
-        result = handler(*args)
-        if result:
-            print(handler(*args))
+            args = args[0]
+
+            if len(args) > 1:
+                result = handler(*args)
+                print(result)
+            elif len(args) == 1:
+                new_args = args[0]
+                result = handler(*new_args)
+                if result:
+                    print(handler(*args))
+            else:
+                print(error_func())
+
 
 if __name__ == "__main__":
     greet()
     main()
-

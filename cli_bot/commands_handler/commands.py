@@ -9,29 +9,27 @@ from contacts.save_contacts import contacts
 
 
 @input_error
-def hello(_):
+def hello():
     return "How can I help you?"
 
 
 @input_error
-def good_bye(_):
+def good_bye():
     print("\n Bye bye!")
     exit()
 
 
 @input_error
-def helper(_):
+def helper():
     return display_help()
 
 
 @input_error
-def error_func(_):
+def error_func():
     raise ValueError(colored(f"<< Command not found. Please, try again! >>", "red"))
 
-
 @input_error
-def add_contact(args):
-    name, phone = args
+def add_contact(name, phone):
     if all(symb.isdigit() or symb in ['+', '-'] for symb in phone):
         contacts[name] = phone
         return f"Contact << {name} >> has been added to the phone book!"
@@ -40,16 +38,16 @@ def add_contact(args):
 
 
 @input_error
-def del_contact(args):
-    name = str(args[0])
+def del_contact(name):
     if name in contacts:
         del contacts[name]
-    return f"Contact << {name} >> has been removed from phone book"
+        return f"Contact << {name} >> has been removed from phone book"
+    else:
+        return f"Contact << {name} >> not found. Please, try again!"
 
 
 @input_error
-def change_phone(args):
-    name, phone = args
+def change_phone(name, phone):
     if name not in contacts:
         return f"contact << {name} >> not found"
     elif all(symb.isdigit() or symb in ['+', '-'] for symb in phone):
@@ -60,16 +58,15 @@ def change_phone(args):
 
 
 @input_error
-def show_phone(args):
-    name = args[0]
+def show_phone(name):
     if name not in contacts:
-        print(f"Contact << {name} >> not found. Please, try again!")
+        return f"Contact << {name} >> not found. Please, try again!"
     else:
         return f"The phone number for << {name} >> is << {contacts[name]} >>"
 
 
 @input_error
-def show_all(_):
+def show_all():
     if not contacts:
         return "<< You have no contacts saved >>"
     else:
