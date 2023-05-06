@@ -31,7 +31,7 @@ class Record:
         self.phones = phones or []
 
     def add_phone(self, phone: Phone):
-        self.phones.append(phone)
+        self.phones.insert(0, phone)
 
     def edit_phone(self, phone: Phone, new_value):
         for p in self.phones:
@@ -61,12 +61,12 @@ class AddressBook(UserDict):
     def delete_record(self, name: Name):
         del self.data[name.value]
 
+    def update_record(self, old_name: Name, new_name):
+        record = self.data.pop(old_name.value)
+        record.name = new_name
+        self.data[new_name.value] = record
+
     def find_records(self):
-        result = []
-        for record in self.data.values():
-            name = str(record.name)
-            phones = ", ".join(str(phone) for phone in record.phones)
-            result.append(f"Name: {name} | Phone: {phones}")
-        return "\n".join(result)
+        return list(self.data.values())
 
 

@@ -1,7 +1,7 @@
 
 from decorator.decorator import input_error
 from display_help.display_help import display_help
-#from contacts.display_contacts import display_contacts
+from contacts.display_contacts import display_contacts
 #from contacts.save_contacts import contacts
 from classes import *
 
@@ -54,6 +54,16 @@ def del_contact(name):
     return f"<< {name} >> has been removed from phone book"
 
 @input_error
+def del_phone(name, phone):
+    phone = Phone(phone)
+    name = Name(name)
+    if name.value not in contacts:
+        return f"<< {phone.value} >> not found in phone book"
+    record = contacts.data[name.value]
+    record.delete_phone(phone)
+    return f"<< {phone.value} >> has been removed from phone book"
+
+@input_error
 def change_phone(name, phone):
     name = Name(name)
     phone = Phone(phone)
@@ -62,6 +72,17 @@ def change_phone(name, phone):
     record = contacts.data[name.value]
     record.edit_phone(record.phones[0], phone)
     return f"Phone number for << {name.value} >> has been updated"
+
+@input_error
+def change_name(name, new_name):
+    name = Name(name)
+    new_name = Name(new_name)
+    if name.value not in contacts:
+        return f"<< {name.value} >> not found in phone book"
+    contacts.update_record(name, new_name)
+    return f"Name for << {name.value} >> has been updated to << {new_name.value} >>"
+
+
 
 @input_error
 def show_phone(name):
@@ -74,8 +95,8 @@ def show_phone(name):
 
 @input_error
 def show_all():
-    result = contacts.find_records()
-    if not result:
+    records = contacts.find_records()
+    if not records:
         return "<< You have no contacts saved >>"
-    #return str(display_contacts(result))
-    return result
+    data = {str(record.name): record.phones for record in records}
+    return display_contacts(data)

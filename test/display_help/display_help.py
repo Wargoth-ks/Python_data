@@ -7,8 +7,11 @@ def display_help():
     cmd_help = {
         "hello": "Say hello",
         "add <name> <number>": "Add contact and number",
+        "add_phone <number>": "Add new number to contact",
         "del <name>": "Remove contact",
-        "change <name> <new number>": "Change contact's phone number",
+        "del_phone <number>": "Remove contact's number",
+        "change <old name>, <new_name>": "Update contact's name",
+        "change_phone <name> <new number>": "Change contact's phone number",
         "phone <name>": "Show phone number for a contact",
         "show all": "Show all contacts",
         "good bye, exit, close or .": "Exit program"
