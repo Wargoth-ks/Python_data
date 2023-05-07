@@ -1,9 +1,13 @@
+import atexit
+import pickle
+import os
 
-from decorator.decorator import input_error
-from display_help.display_help import display_help
-from contacts.display_contacts import display_contacts
-#from contacts.save_contacts import contacts
-from classes import *
+from decorator import input_error
+from show_help import show_help
+from show_contacts import show_contacts
+from classes import AddressBook, Name, Phone, Record
+
+FILENAME = 'contacts_saved.pickle'
 
 # Processing input commands
 
@@ -20,7 +24,7 @@ def good_bye():
 
 @input_error
 def helper():
-    return display_help()
+    return show_help()
 
 @input_error
 def error_func():
@@ -37,14 +41,14 @@ def add_contact(name, phone):
 @input_error
 def add_phone(name, phone):
     phone = Phone(phone)
-    if name not in contacts:
-        contacts.add_record(Record(name, [phone]))
-        return f"<< {name} >> and {phone} have been added to phone book"
+    name = Name(name)
+    if name.value in contacts:
+        contact = contacts[name.value]
+        contact.add_phone(phone.value)
+        return f"<< {phone} >> has been added to the contact << {name} >> in phone book"
     else:
-        contact = contacts[name]
-        contact.add_phone(phone)
-        return f"<< {phone} >> has been added to the contact {name} in phone book"
-    
+        return f"<< {name.value} >> not found in phone book"
+
 @input_error
 def del_contact(name):
     name = Name(name)
@@ -60,7 +64,9 @@ def del_phone(name, phone):
     if name.value not in contacts:
         return f"<< {phone.value} >> not found in phone book"
     record = contacts.data[name.value]
-    record.delete_phone(phone)
+    if phone.value not in record.phones:
+        raise ValueError(f"<< {phone.value} >> not found in << {name.value} >> contact")
+    record.delete_phone(phone.value)
     return f"<< {phone.value} >> has been removed from phone book"
 
 @input_error
@@ -99,4 +105,21 @@ def show_all():
     if not records:
         return "<< You have no contacts saved >>"
     data = {str(record.name): record.phones for record in records}
-    return display_contacts(data)
+    return show_contacts(data)
+
+
+
+# Save contacts on exit
+def save_contacts_on_exit():
+    with open(FILENAME, 'wb') as f:
+        pickle.dump(contacts, f)
+
+# Load contacts
+if os.path.exists(FILENAME):
+    with open(FILENAME, 'rb') as f:
+        contacts = pickle.load(f)
+else:
+    contacts = AddressBook()
+
+# Registration of a function for saving contacts when the program is finished
+atexit.register(save_contacts_on_exit)

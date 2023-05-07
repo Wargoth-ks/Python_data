@@ -1,8 +1,8 @@
 from termcolor import colored
-from greet.greet import greet
+from show_greeting import greet
 
-from commands_handler.commands import hello, helper, add_contact, del_contact, del_phone, error_func
-from commands_handler.commands import change_phone, show_all, show_phone, good_bye, add_phone, change_name
+from commands import hello, helper, add_contact, del_contact, del_phone, error_func
+from commands import change_phone, show_all, show_phone, good_bye, add_phone, change_name
 
 dict_cmd = {
     "hello": hello,
@@ -23,6 +23,7 @@ dict_cmd = {
 
 simple_cmds = ["show all", "good bye", "close", "exit", ".", "help", "hello"]
 
+
 def main():
     while True:
         user_input = input(colored("\nEnter command: ", "green"))
@@ -36,7 +37,7 @@ def main():
                 command, *data = user_input.strip().split(' ', 1)
                 handler = dict_cmd[command]
                 args = data[0].split(" ")
-                print(command, args)
+                # print(command, args)
                 if not data:
                     print(error_func())
                 if len(data[0].split(", ")) == 2:
@@ -52,7 +53,8 @@ def main():
                 if len(data) == 1:
                     print(handler(*data))
             else:
-                print("Type Error: " + colored(f"Command << {user_input} >> must have any arguments !!!", "red"))
+                print(
+                    "Type Error: " + colored(f"Command << {user_input} >> must have any arguments !!!", "red"))
 
 
 if __name__ == "__main__":

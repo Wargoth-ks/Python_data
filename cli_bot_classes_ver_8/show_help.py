@@ -2,7 +2,7 @@
 
 from termcolor import colored
 
-def display_help():
+def show_help():
 
     cmd_help = {
         "hello": "Say hello",
