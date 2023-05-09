@@ -1,13 +1,9 @@
-import atexit
-import pickle
-import os
-
 from decorator import input_error
 from show_help import show_help
 from show_contacts import show_contacts
 from classes import AddressBook, Name, Phone, Record
 
-FILENAME = 'contacts_saved.pickle'
+# FILENAME = 'contacts_saved.pickle'
 
 # Processing input commands
 
@@ -106,20 +102,3 @@ def show_all():
         return "<< You have no contacts saved >>"
     data = {str(record.name): record.phones for record in records}
     return show_contacts(data)
-
-
-
-# Save contacts on exit
-def save_contacts_on_exit():
-    with open(FILENAME, 'wb') as f:
-        pickle.dump(contacts, f)
-
-# Load contacts
-if os.path.exists(FILENAME):
-    with open(FILENAME, 'rb') as f:
-        contacts = pickle.load(f)
-else:
-    contacts = AddressBook()
-
-# Registration of a function for saving contacts when the program is finished
-atexit.register(save_contacts_on_exit)

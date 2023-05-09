@@ -4,7 +4,7 @@ from show_greeting import greet
 from commands import hello, helper, add_contact, del_contact, del_phone, error_func
 from commands import change_phone, show_all, show_phone, good_bye, add_phone, change_name
 
-dict_cmd = {
+cmds = {
     "hello": hello,
     "help": helper,
     "add": add_contact,
@@ -21,21 +21,21 @@ dict_cmd = {
     ".": good_bye
 }
 
-simple_cmds = ["show all", "good bye", "close", "exit", ".", "help", "hello"]
+list_cmds = ["show all", "good bye", "close", "exit", ".", "help", "hello"]
 
 
 def main():
     while True:
-        user_input = input(colored("\nEnter command: ", "green"))
-        if user_input in simple_cmds:
-            simple_func = dict_cmd[user_input.strip()]
-            print(simple_func())
-        elif not user_input or user_input.split()[0] not in dict_cmd.keys():
+        usr_inp = input(colored("\nEnter command: ", "green"))
+        if usr_inp in list_cmds:
+            s_func = cmds[usr_inp.strip()]
+            print(s_func())
+        elif not usr_inp or usr_inp.split()[0] not in cmds.keys():
             print(error_func())
         else:
-            if user_input.split()[0] in dict_cmd.keys() and len(user_input.split()) > 1:
-                command, *data = user_input.strip().split(' ', 1)
-                handler = dict_cmd[command]
+            if usr_inp.split()[0] in cmds.keys() and len(usr_inp.split()) > 1:
+                command, *data = usr_inp.strip().split(' ', 1)
+                handler = cmds[command]
                 args = data[0].split(" ")
                 # print(command, args)
                 if not data:
@@ -45,7 +45,9 @@ def main():
                     print(handler(old_name, new_name))
                     continue
                 if len(args) >= 2:
-                    if all(symb.isdigit() or symb in ['+', '-'] for symb in args[-1]):
+                    if all(symb.isdigit() or symb in ['+', '-']
+                            for symb in args[-1]):
+
                         dig_arg = str(args[-1])
                         list_args = [" ".join(args[:-1]), dig_arg]
                         print(handler(*list_args))
@@ -54,7 +56,7 @@ def main():
                     print(handler(*data))
             else:
                 print(
-                    "Type Error: " + colored(f"Command << {user_input} >> must have any arguments !!!", "red"))
+                    "Type Error: " + colored(f"Command << {usr_inp} >> must have any arguments !!!", "red"))
 
 
 if __name__ == "__main__":
