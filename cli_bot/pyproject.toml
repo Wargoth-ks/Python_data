@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "cli-bot"
+version = "13.6.0"
+description = "This is personal helper"
+authors = ["Wargoth"]
+
+[tool.poetry.dependencies]
+python = "^3.11.5"
+termcolor = "^2.3.0"
+prompt-toolkit = "^3.0.39"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[virtualenvs]
+path = ".venv"
