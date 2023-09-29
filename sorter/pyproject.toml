@@ -1,9 +1,9 @@
 [tool.poetry]
 name = "sorter"
 version = "0.1.0"
-description = ""
-authors = ["Wargoth_ks <121107554+Wargoth-ks@users.noreply.github.com>"]
-readme = "README.md"
+description = "This application sort files"
+authors = ["Wargoth"]
+license = "MIT"
 
 [tool.poetry.dependencies]
 python = "^3.11"
