@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "web-exchange"
+version = "0.1.0"
+description = ""
+authors = ["Wargoth_ks <121107554+Wargoth-ks@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiohttp = "^3.8.5"
+websockets = "^11.0.3"
+prompt-toolkit = "^3.0.39"
+aiohttp-retry = "^2.8.3"
+aiofile = "^3.8.8"
+aiopath = "^0.6.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
