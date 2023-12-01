@@ -87,7 +87,7 @@ class Birthday(Field):
             raise ValueError("Date of BD must be in format << dd.mm.yyyy >>")
 
 
-class Record(Field):
+class Record:
     def __init__(self, name: Name, phones: list[Phone] = [], birthday=None):
         self.name = name
         self.phones = phones
